@@ -70,6 +70,133 @@ function openTab(evt, tabName) {
     evt.target.classList.add('active');
 }
 
+// Calculate Date Difference
+function calculateDifference() {
+    const startDate = new Date(document.getElementById('start_date').value);
+    const endDate = new Date(document.getElementById('end_date').value);
+
+    if (startDate >= endDate) {
+        alert('Start date must be before end date');
+        return;
+    }
+
+    const diffTime = Math.abs(endDate - startDate);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    const diffWeeks = Math.floor(diffDays / 7);
+    const diffMonths = Math.floor(diffDays / 30);
+    const diffYears = Math.floor(diffDays / 365);
+
+    document.getElementById('diff-days').textContent = diffDays;
+    document.getElementById('diff-weeks').textContent = diffWeeks;
+    document.getElementById('diff-months').textContent = diffMonths;
+    document.getElementById('diff-years').textContent = diffYears;
+
+    document.getElementById('difference-result').style.display = 'block';
+}
+
+// Calculate Age
+function calculateAge() {
+    const birthDate = new Date(document.getElementById('birth_date').value);
+    const now = new Date();
+
+    let years = now.getFullYear() - birthDate.getFullYear();
+    let months = now.getMonth() - birthDate.getMonth();
+    let days = now.getDate() - birthDate.getDate();
+
+    if (days < 0) {
+        months--;
+        days += new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+    }
+
+    if (months < 0) {
+        years--;
+        months += 12;
+    }
+
+    const totalHours = Math.floor((now - birthDate) / (1000 * 60 * 60));
+    const hours = totalHours % 24;
+    const totalMinutes = Math.floor((now - birthDate) / (1000 * 60));
+    const minutes = totalMinutes % 60;
+    const seconds = Math.floor((now - birthDate) / 1000) % 60;
+
+    document.getElementById('age-years').textContent = years;
+    document.getElementById('age-months').textContent = months;
+    document.getElementById('age-days').textContent = days;
+    document.getElementById('age-hours').textContent = hours;
+    document.getElementById('age-minutes').textContent = minutes;
+    document.getElementById('age-seconds').textContent = seconds;
+
+    document.getElementById('age-result').style.display = 'block';
+}
+
+// Calculate Day of Week
+function calculateDayOfWeek() {
+    const date = new Date(document.getElementById('date').value);
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const dayOfWeek = days[date.getDay()];
+
+    document.getElementById('day-of-week').textContent = dayOfWeek;
+    document.getElementById('dayOfWeek-result').style.display = 'block';
+}
+
+// Calculate Elapsed Time
+function calculateElapsed() {
+    const pastDate = new Date(document.getElementById('past_date').value);
+    const now = new Date();
+
+    const diffTime = now - pastDate;
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    const diffWeeks = Math.floor(diffDays / 7);
+    const diffMonths = Math.floor(diffDays / 30);
+    const diffYears = Math.floor(diffDays / 365);
+    const hours = Math.floor((diffTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diffTime % (1000 * 60)) / 1000);
+
+    document.getElementById('elapsed-years').textContent = diffYears;
+    document.getElementById('elapsed-months').textContent = diffMonths;
+    document.getElementById('elapsed-weeks').textContent = diffWeeks;
+    document.getElementById('elapsed-days').textContent = diffDays;
+    document.getElementById('elapsed-hours').textContent = hours;
+    document.getElementById('elapsed-minutes').textContent = minutes;
+    document.getElementById('elapsed-seconds').textContent = seconds;
+
+    document.getElementById('elapsed-result').style.display = 'block';
+}
+
+// Start Countdown
+function startCountdown() {
+    const targetDateValue = document.getElementById('target_date').value;
+    if (!targetDateValue) {
+        alert('Please select a target date');
+        return;
+    }
+
+    const targetDate = new Date(targetDateValue).getTime();
+    const now = new Date().getTime();
+
+    if (targetDate <= now) {
+        alert('Target date must be in the future');
+        return;
+    }
+
+    const diffTime = targetDate - now;
+    const days = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diffTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diffTime % (1000 * 60)) / 1000);
+
+    document.getElementById('countdown-days').textContent = days;
+    document.getElementById('countdown-hours').textContent = hours;
+    document.getElementById('countdown-minutes').textContent = minutes;
+    document.getElementById('countdown-seconds').textContent = seconds;
+
+    document.getElementById('countdown-result').style.display = 'block';
+
+    // Start live countdown
+    startLiveCountdown(targetDate);
+}
+
 // Form Submission
 function submitForm(formId, url) {
     const form = document.getElementById(formId);
