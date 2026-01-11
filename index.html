@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Days Counter - Time Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div id="particles"></div>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-calendar-alt"></i> Days Counter</h1>
+            <button id="dark-mode-toggle" onclick="toggleDarkMode()"><i class="fas fa-moon"></i></button>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-button active" onclick="openTab(event, 'difference')"><i class="fas fa-exchange-alt"></i> Date Difference</button>
+            <button class="tab-button" onclick="openTab(event, 'countdown')"><i class="fas fa-clock"></i> Countdown</button>
+            <button class="tab-button" onclick="openTab(event, 'age')"><i class="fas fa-birthday-cake"></i> Age Calculator</button>
+            <button class="tab-button" onclick="openTab(event, 'dayOfWeek')"><i class="fas fa-calendar-day"></i> Day of Week</button>
+            <button class="tab-button" onclick="openTab(event, 'elapsed')"><i class="fas fa-history"></i> Time Elapsed</button>
+        </div>
+
+        <div id="difference" class="tab-content">
+            <div class="card">
+                <h2><i class="fas fa-exchange-alt"></i> Calculate Date Difference</h2>
+                <form id="difference-form" onsubmit="submitForm('difference-form', '/'); return false;">
+                    <div class="form-group">
+                        <label for="start_date"><i class="fas fa-calendar"></i> Start Date:</label>
+                        <input type="date" id="start_date" name="start_date" value="{{ start_date or '' }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="end_date"><i class="fas fa-calendar"></i> End Date:</label>
+                        <input type="date" id="end_date" name="end_date" value="{{ end_date or '' }}" required>
+                    </div>
+                    <button type="submit" class="btn"><i class="fas fa-calculator"></i> Calculate</button>
+                </form>
+                {% if result %}
+                <div class="result">
+                    <h3><i class="fas fa-chart-bar"></i> Result:</h3>
+                    <p><strong>Days:</strong> {{ result.days }}</p>
+                    <p><strong>Weeks:</strong> {{ result.weeks }}</p>
+                    <p><strong>Months:</strong> {{ result.months }}</p>
+                    <p><strong>Years:</strong> {{ result.years }}</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div id="countdown" class="tab-content">
+            <div class="card">
+                <h2><i class="fas fa-clock"></i> Countdown Timer</h2>
+                <form id="countdown-form" onsubmit="submitForm('countdown-form', '/countdown'); return false;">
+                    <div class="form-group">
+                        <label for="target_date"><i class="fas fa-calendar"></i> Target Date:</label>
+                        <input type="date" id="target_date" name="target_date" value="{{ target_date or '' }}" required>
+                    </div>
+                    <button type="submit" class="btn"><i class="fas fa-play"></i> Start Countdown</button>
+                </form>
+                {% if countdown %}
+                <div class="countdown">
+                    <h3><i class="fas fa-clock"></i> Countdown:</h3>
+                    <div class="countdown-timer">
+                        <div class="time-unit">
+                            <span class="number">{{ countdown.days }}</span>
+                            <span class="label">Days</span>
+                        </div>
+                        <div class="time-unit">
+                            <span class="number">{{ countdown.hours }}</span>
+                            <span class="label">Hours</span>
+                        </div>
+                        <div class="time-unit">
+                            <span class="number">{{ countdown.minutes }}</span>
+                            <span class="label">Minutes</span>
+                        </div>
+                        <div class="time-unit">
+                            <span class="number">{{ countdown.seconds }}</span>
+                            <span class="label">Seconds</span>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                <div id="live-countdown"></div>
+            </div>
+        </div>
+
+        <div id="age" class="tab-content">
+            <div class="card">
+                <h2><i class="fas fa-birthday-cake"></i> Age Calculator</h2>
+                <form id="age-form" onsubmit="submitForm('age-form', '/age'); return false;">
+                    <div class="form-group">
+                        <label for="birth_date"><i class="fas fa-calendar"></i> Birth Date:</label>
+                        <input type="date" id="birth_date" name="birth_date" value="{{ birth_date or '' }}" required>
+                    </div>
+                    <button type="submit" class="btn"><i class="fas fa-calculator"></i> Calculate Age</button>
+                </form>
+                {% if age %}
+                <div class="result">
+                    <h3><i class="fas fa-user"></i> Your Age:</h3>
+                    <p><strong>Years:</strong> {{ age.years }}</p>
+                    <p><strong>Months:</strong> {{ age.months }}</p>
+                    <p><strong>Days:</strong> {{ age.days }}</p>
+                    <p><strong>Hours:</strong> {{ age.hours }}</p>
+                    <p><strong>Minutes:</strong> {{ age.minutes }}</p>
+                    <p><strong>Seconds:</strong> {{ age.seconds }}</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div id="dayOfWeek" class="tab-content">
+            <div class="card">
+                <h2><i class="fas fa-calendar-day"></i> Day of the Week</h2>
+                <form id="dayOfWeek-form" onsubmit="submitForm('dayOfWeek-form', '/day_of_week'); return false;">
+                    <div class="form-group">
+                        <label for="date"><i class="fas fa-calendar"></i> Select Date:</label>
+                        <input type="date" id="date" name="date" value="{{ date or '' }}" required>
+                    </div>
+                    <button type="submit" class="btn"><i class="fas fa-search"></i> Find Day</button>
+                </form>
+                {% if day_of_week %}
+                <div class="result">
+                    <h3><i class="fas fa-calendar-week"></i> Day of the Week:</h3>
+                    <p><strong>{{ day_of_week }}</strong></p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div id="elapsed" class="tab-content">
+            <div class="card">
+                <h2><i class="fas fa-history"></i> Time Elapsed</h2>
+                <form id="elapsed-form" onsubmit="submitForm('elapsed-form', '/elapsed'); return false;">
+                    <div class="form-group">
+                        <label for="past_date"><i class="fas fa-calendar"></i> Past Date:</label>
+                        <input type="date" id="past_date" name="past_date" value="{{ past_date or '' }}" required>
+                    </div>
+                    <button type="submit" class="btn"><i class="fas fa-calculator"></i> Calculate Elapsed Time</button>
+                </form>
+                {% if elapsed %}
+                <div class="result">
+                    <h3><i class="fas fa-clock"></i> Time Elapsed:</h3>
+                    <p><strong>Years:</strong> {{ elapsed.years }}</p>
+                    <p><strong>Months:</strong> {{ elapsed.months }}</p>
+                    <p><strong>Weeks:</strong> {{ elapsed.weeks }}</p>
+                    <p><strong>Days:</strong> {{ elapsed.days }}</p>
+                    <p><strong>Hours:</strong> {{ elapsed.hours }}</p>
+                    <p><strong>Minutes:</strong> {{ elapsed.minutes }}</p>
+                    <p><strong>Seconds:</strong> {{ elapsed.seconds }}</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 Days Counter App. All rights <i class="fas fa-heart"></i> Reserverd</p>
+            <div class="social-links">
+                <a href="https://github.com/Sam-13s" class="social-link"><i class="fab fa-github"></i></a>
+                <a href="https://www.reddit.com/user/Beneficial_Class_846/" class="social-link"><i class="fab fa-reddit"></i></a>
+                <a href="https://www.linkedin.com/in/samir13/" class="social-link"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
