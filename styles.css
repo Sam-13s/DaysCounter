@@ -140,7 +140,7 @@ input[type="date"]:focus {
 }
 
 .dark-mode .result, .dark-mode .countdown {
-    background: #2d3748;
+    background: #eee;
     border-left-color: #667eea;
 }
 
@@ -338,13 +338,12 @@ input[type="date"]:focus {
 /* Dark Mode Toggle Button */
 #dark-mode-toggle {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 0px;
+    right: 10px;
     background: rgba(20, 3, 45, 0.1);
     border: 2px solid rgba(255, 255, 255, 0.2);
     color: white;
-    padding: 10px 15px;
-    border-radius: 50%;
+    padding: 4px 6px;
     cursor: pointer;
     transition: all 0.3s ease;
     backdrop-filter: blur(10px);
