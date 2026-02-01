@@ -22,6 +22,7 @@
             <button class="tab-button" onclick="openTab(event, 'age')"><i class="fas fa-birthday-cake"></i> Age Calculator</button>
             <button class="tab-button" onclick="openTab(event, 'dayOfWeek')"><i class="fas fa-calendar-day"></i> Day of Week</button>
             <button class="tab-button" onclick="openTab(event, 'elapsed')"><i class="fas fa-history"></i> Time Elapsed</button>
+            <button class="tab-button" onclick="openTab(event, 'duration')"><i class="fas fa-stopwatch"></i> Time Duration</button>
         </div>
 
         <div id="difference" class="tab-content">
@@ -141,6 +142,33 @@
                     <p><strong>Hours:</strong> <span id="elapsed-hours"></span></p>
                     <p><strong>Minutes:</strong> <span id="elapsed-minutes"></span></p>
                     <p><strong>Seconds:</strong> <span id="elapsed-seconds"></span></p>
+                </div>
+            </div>
+        </div>
+
+        <div id="duration" class="tab-content">
+            <div class="card">
+                <h2><i class="fas fa-stopwatch"></i> Time Duration Calculator</h2>
+                <form id="duration-form" onsubmit="calculateDuration(); return false;">
+                    <div class="form-group">
+                        <label for="start_datetime"><i class="fas fa-calendar"></i> Start Date & Time:</label>
+                        <input type="datetime-local" id="start_datetime" name="start_datetime" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="end_datetime"><i class="fas fa-calendar"></i> End Date & Time:</label>
+                        <input type="datetime-local" id="end_datetime" name="end_datetime" required>
+                    </div>
+                    <button type="submit" class="btn"><i class="fas fa-calculator"></i> Calculate Duration</button>
+                </form>
+                <div id="duration-result" class="result" style="display: none;">
+                    <h3><i class="fas fa-clock"></i> Duration:</h3>
+                    <p><strong>Years:</strong> <span id="duration-years"></span></p>
+                    <p><strong>Months:</strong> <span id="duration-months"></span></p>
+                    <p><strong>Weeks:</strong> <span id="duration-weeks"></span></p>
+                    <p><strong>Days:</strong> <span id="duration-days"></span></p>
+                    <p><strong>Hours:</strong> <span id="duration-hours"></span></p>
+                    <p><strong>Minutes:</strong> <span id="duration-minutes"></span></p>
+                    <p><strong>Seconds:</strong> <span id="duration-seconds"></span></p>
                 </div>
             </div>
         </div>
